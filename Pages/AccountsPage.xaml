@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ShareInvest.ViewModels"
+             xmlns:model="clr-namespace:ShareInvest.Models"
+             x:DataType="viewmodel:AccountsViewModel"
+             x:Class="ShareInvest.Pages.AccountsPage">
+
+    <Grid ColumnDefinitions="*,*"
+          RowDefinitions="*,Auto">
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2">
+        </ActivityIndicator>
+
+        <CarouselView Grid.ColumnSpan="2"
+                      ItemsSource="{Binding AccountCollection}"
+                      IsScrollAnimated="True"
+                      EmptyView="The account does not exist.">
+
+            <CarouselView.ItemsLayout>
+
+                <LinearItemsLayout Orientation="Horizontal"
+                                   SnapPointsType="MandatorySingle"
+                                   SnapPointsAlignment="End">
+                </LinearItemsLayout>
+
+            </CarouselView.ItemsLayout>
+
+            <CarouselView.ItemTemplate>
+
+                <DataTemplate x:DataType="model:ObservableAccount">
+
+                    <Frame BackgroundColor="Transparent"
+                           BorderColor="{AppThemeBinding Dark=#FFFAFA,
+                                                         Light=#696969}"
+                           Margin="15,15,15,15">
+
+                        <Grid RowDefinitions="125,Auto"
+                              RowSpacing="15">
+
+                            <CollectionView ItemsSource="{Binding Balances}"
+                                            Grid.Row="1">
+
+                                <CollectionView.ItemsLayout>
+
+                                    <GridItemsLayout Orientation="Vertical"
+                                                     VerticalItemSpacing="5">
+                                    </GridItemsLayout>
+
+                                </CollectionView.ItemsLayout>
+
+                                <CollectionView.ItemTemplate>
+
+                                    <DataTemplate x:DataType="model:ObservableBalance">
+
+                                        <Grid ColumnDefinitions="*,2*,*,2*,*,2*"
+                                              RowDefinitions="*,2*,*,2*,*,2*,*,2*"
+                                              MinimumHeightRequest="125"
+                                              ColumnSpacing="3"
+                                              Padding="5,10,0,10">
+
+                                            <Label Text="{Binding Code}"
+                                                   TextColor="{AppThemeBinding Dark=#FFD700,
+                                                                               Light=#007DFF}"
+                                                   VerticalTextAlignment="End"
+                                                   HorizontalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="NoWrap"
+                                                   Grid.Column="0"
+                                                   Grid.Row="0">
+                                            </Label>
+
+                                            <Label Text="{Binding Name}"
+                                                   VerticalTextAlignment="Center"
+                                                   HorizontalTextAlignment="Start"
+                                                   FontSize="Medium"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"
+                                                   Grid.ColumnSpan="3"
+                                                   Grid.Column="1"
+                                                   Grid.RowSpan="2"
+                                                   Grid.Row="0">
+                                            </Label>
+
+                                            <Label Text="수익률"
+                                                   HorizontalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="4"
+                                                   Grid.Row="1">
+                                            </Label>
+
+                                            <Label Text="{Binding Rate,
+                                                                  StringFormat='{0:P2}'}"
+                                                   TextColor="{Binding Color}"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="Medium"
+                                                   FontAttributes="Bold"
+                                                   Grid.Column="5"
+                                                   Grid.RowSpan="2"
+                                                   Grid.Row="0">
+                                            </Label>
+
+                                            <Label Text="보유량"
+                                                   VerticalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="0"
+                                                   Grid.Row="2">
+                                            </Label>
+
+                                            <Label Text="전일"
+                                                   VerticalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="2"
+                                                   Grid.Row="2">
+                                            </Label>
+
+                                            <Label Text="매입가"
+                                                   VerticalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="4"
+                                                   Grid.Row="2">
+                                            </Label>
+
+                                            <Label Text="{Binding Quantity,
+                                                                  StringFormat='{0:N0}'}"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="1"
+                                                   Grid.Row="3">
+                                            </Label>
+
+                                            <Label Text="{Binding PreviousQuantity,
+                                                                  StringFormat='{0:N0}'}"
+                                                   TextColor="{Binding PreviousColor}"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="3"
+                                                   Grid.Row="3">
+                                            </Label>
+
+                                            <Label Text="{Binding Average,
+                                                                  StringFormat='{0:N0}'}"
+                                                   HorizontalTextAlignment="End"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="5"
+                                                   Grid.Row="3">
+                                            </Label>
+
+                                            <Label Text="결제잔고"
+                                                   VerticalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="0"
+                                                   Grid.Row="4">
+                                            </Label>
+
+                                            <Label Text="금일"
+                                                   VerticalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="2"
+                                                   Grid.Row="4">
+                                            </Label>
+
+                                            <Label Text="현재가"
+                                                   VerticalTextAlignment="End"                                                   
+                                                   FontSize="Micro"
+                                                   Grid.Column="4"
+                                                   Grid.Row="4">
+                                            </Label>
+
+                                            <Label Text="{Binding PaymentBalance,
+                                                                  StringFormat='{0:N0}'}"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="1"
+                                                   Grid.Row="5">
+                                            </Label>
+
+                                            <Label Text="{Binding TodayQuantity,
+                                                                  StringFormat='{0:N0}'}"
+                                                   TextColor="{Binding TodayColor}"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="3"
+                                                   Grid.Row="5">
+                                            </Label>
+
+                                            <Label Text="{Binding Current,
+                                                                  StringFormat='{0:N0}'}"
+                                                   HorizontalTextAlignment="End"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="5"
+                                                   Grid.Row="5">
+                                            </Label>
+
+                                            <Label Text="매입금액"
+                                                   VerticalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="0"
+                                                   Grid.Row="6">
+                                            </Label>
+
+                                            <Label Text="평가손익"
+                                                   VerticalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="2"
+                                                   Grid.Row="6">
+                                            </Label>
+
+                                            <Label Text="평가금액"
+                                                   VerticalTextAlignment="End"
+                                                   FontSize="Micro"
+                                                   Grid.Column="4"
+                                                   Grid.Row="6">
+                                            </Label>
+
+                                            <Label Text="{Binding Purchase,
+                                                                  StringFormat='{0:C0}'}"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="1"
+                                                   Grid.Row="7">
+                                            </Label>
+
+                                            <Label Text="{Binding Amount,
+                                                                  StringFormat='{0:C0}'}"
+                                                   TextColor="{Binding Color}"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="3"
+                                                   Grid.Row="7">
+                                            </Label>
+
+                                            <Label Text="{Binding Valuation,
+                                                                  StringFormat='{0:C0}'}"
+                                                   HorizontalTextAlignment="End"
+                                                   VerticalTextAlignment="Start"
+                                                   FontSize="Small"
+                                                   Grid.Column="5"
+                                                   Grid.Row="7">
+                                            </Label>
+
+                                        </Grid>
+
+                                    </DataTemplate>
+
+                                </CollectionView.ItemTemplate>
+
+                            </CollectionView>
+
+                            <Grid ColumnSpacing="5"
+                                  Grid.RowSpan="1">
+
+                                <Grid ColumnDefinitions="7.5*,*,7.5*,*,7.5*"
+                                      RowDefinitions="3.5*,7.5*,*,3.5*,7.5*,*,3.5*,7.5*">
+
+                                    <Label Text="계좌번호"
+                                           FontSize="Small"
+                                           Grid.Column="0"
+                                           Grid.Row="0">
+                                    </Label>
+
+                                    <Label Text="보유종목"
+                                           FontSize="Small"
+                                           Grid.Column="2"
+                                           Grid.Row="0">
+                                    </Label>
+
+                                    <Label Text="총매입"
+                                           FontSize="Small"
+                                           Grid.Column="4"
+                                           Grid.Row="0">
+                                    </Label>
+
+                                    <Label Text="{Binding Account}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="0"
+                                           Grid.Row="1">
+                                    </Label>
+
+                                    <Label Text="{Binding NumberOfPrints,
+                                                          StringFormat='{0:N0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="2"
+                                           Grid.Row="1">
+                                    </Label>
+
+                                    <Label Text="{Binding TotalPurchaseAmount,
+                                                          StringFormat='{0:C0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="4"
+                                           Grid.Row="1">
+                                    </Label>
+
+                                    <Label Text="유가잔고"
+                                           FontSize="Small"
+                                           Grid.Column="0"
+                                           Grid.Row="3">
+                                    </Label>
+
+                                    <Label Text="예탁자산"
+                                           FontSize="Small"
+                                           Grid.Column="2"
+                                           Grid.Row="3">
+                                    </Label>
+
+                                    <Label Text="추정예탁자산"
+                                           FontSize="Small"
+                                           Grid.Column="4"
+                                           Grid.Row="3">
+                                    </Label>
+
+                                    <Label Text="{Binding Balance,
+                                                          StringFormat='{0:C0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="0"
+                                           Grid.Row="4">
+                                    </Label>
+
+
+                                    <Label Text="{Binding Asset,
+                                                          StringFormat='{0:C0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="2"
+                                           Grid.Row="4">
+                                    </Label>
+
+                                    <Label Text="{Binding PresumeAsset,
+                                                          StringFormat='{0:C0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="4"
+                                           Grid.Row="4">
+                                    </Label>
+
+                                    <Label Text="예수금"
+                                           FontSize="Small"
+                                           Grid.Column="0"
+                                           Grid.Row="6">
+                                    </Label>
+
+                                    <Label Text="D+2예수금"
+                                           FontSize="Small"
+                                           Grid.Column="2"
+                                           Grid.Row="6">
+                                    </Label>
+
+                                    <Label Text="주문가능금액"
+                                           FontSize="Small"
+                                           Grid.Column="4"
+                                           Grid.Row="6">
+                                    </Label>
+
+                                    <Label Text="{Binding Deposit,
+                                                          StringFormat='{0:C0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="0"
+                                           Grid.Row="7">
+                                    </Label>
+
+                                    <Label Text="{Binding PresumeDeposit,
+                                                          StringFormat='{0:C0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="2"
+                                           Grid.Row="7">
+                                    </Label>
+
+                                    <Label Text="{Binding OrderableCash,
+                                                          StringFormat='{0:C0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           HorizontalTextAlignment="End"
+                                           Grid.Column="4"
+                                           Grid.Row="7">
+                                    </Label>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </Grid>
+
+                    </Frame>
+
+                </DataTemplate>
+
+            </CarouselView.ItemTemplate>
+
+        </CarouselView>
+
+    </Grid>
+
+</ContentPage>

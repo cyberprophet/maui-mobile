@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ShareInvest.ViewModels"
+             xmlns:model="clr-namespace:ShareInvest.Models"
+             x:DataType="viewmodel:StocksViewModel"
+             x:Class="ShareInvest.Pages.StocksPage">
+
+    <Grid ColumnDefinitions="*,*"
+          RowDefinitions="*,Auto">
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2">
+        </ActivityIndicator>
+
+        <CollectionView RemainingItemsThreshold="1"
+                        RemainingItemsThresholdReached="RemainingItemsThresholdReached"
+                        Grid.ColumnSpan="2"
+                        SelectionMode="None"
+                        ItemsSource="{Binding StockCollection}">
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="model:ObservableStock">
+
+                    <Grid Padding="5,5,5,0"
+                          ColumnDefinitions="*,Auto"
+                          RowDefinitions="*,Auto">
+
+                        <Frame BackgroundColor="Transparent">
+                            
+                            <!--
+                            <Frame.GestureRecognizers>
+                                
+                                <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:StockViewModel}},
+                                                                        Path=GoToSummaryCommand}">
+                                </TapGestureRecognizer>
+                            </Frame.GestureRecognizers>
+                            -->
+
+                            <Grid ColumnDefinitions="1.75*,1.5*,*,1.15*"
+                                  ColumnSpacing="5"
+                                  RowDefinitions="Auto,*,*">
+
+                                <Label Text="{Binding Code}"
+                                       TextColor="{AppThemeBinding Dark=#FFD700,
+                                                                   Light=#007DFF}"
+                                       VerticalOptions="EndAndExpand"
+                                       VerticalTextAlignment="End"
+                                       FontAttributes="Bold"
+                                       FontSize="Micro"
+                                       Grid.Column="0"
+                                       Grid.Row="0">
+                                </Label>
+
+                                <Label Text="{Binding State}"
+                                       TextColor="{AppThemeBinding Light=#696969,
+                                                                   Dark=#808080}"
+                                       HorizontalTextAlignment="End"
+                                       FontAttributes="Italic"
+                                       FontSize="Micro"
+                                       Grid.Column="2"
+                                       Grid.ColumnSpan="2"
+                                       Grid.Row="0">
+                                </Label>
+
+                                <Label Text="{Binding Name}"
+                                       VerticalOptions="Center"                                       
+                                       FontSize="Medium"
+                                       FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="0"
+                                       Grid.Row="1"
+                                       Grid.RowSpan="2">
+                                </Label>
+
+                                <Label Text="{Binding Current,
+                                                      StringFormat='{0:N0}'}"
+                                       TextColor="{Binding Color}"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalTextAlignment="End"
+                                       FontAttributes="Bold"
+                                       FontSize="Medium"
+                                       LineBreakMode="MiddleTruncation"
+                                       Grid.Column="1"
+                                       Grid.Row="1"
+                                       Grid.RowSpan="2">
+                                </Label>
+
+                                <Label Text="{Binding Rate,
+                                                      StringFormat='{0:P2}'}"
+                                       TextColor="{Binding Color}"
+                                       HorizontalTextAlignment="End"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="Small"
+                                       Grid.Column="2"
+                                       Grid.Row="1">
+                                </Label>
+
+                                <HorizontalStackLayout Grid.Column="2"
+                                                       Grid.Row="2"
+                                                       HorizontalOptions="End">
+                                    <Label TextColor="{Binding Color}"
+                                           Text="{Binding Sign}"
+                                           LineBreakMode="NoWrap"
+                                           FontAttributes="{Binding Attributes}"
+                                           FontSize="Small">
+                                    </Label>
+
+                                    <Label TextColor="{Binding Color}"
+                                           Text="{Binding CompareToPreviousDay,
+                                                          StringFormat='{0:N0}'}"
+                                           LineBreakMode="NoWrap"
+                                           FontAttributes="{Binding Attributes}"
+                                           FontSize="Small">
+                                    </Label>
+                                </HorizontalStackLayout>
+
+                                <Label Text="{Binding Volume,
+                                                      StringFormat='{0:N0}'}"
+                                       HorizontalTextAlignment="End"
+                                       LineBreakMode="TailTruncation"
+                                       FontSize="Small"
+                                       Grid.Column="3"
+                                       Grid.Row="1">
+                                </Label>
+
+                                <Label Text="{Binding TransactionAmount,
+                                                      StringFormat='{0:N0}'}"
+                                       HorizontalTextAlignment="End"
+                                       FontSize="Small"
+                                       Grid.Column="3"
+                                       Grid.Row="2">
+                                </Label>
+                                
+                            </Grid>
+                            
+                        </Frame>
+                        
+                    </Grid>
+                    
+                </DataTemplate>
+                
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
+        
+    </Grid>
+    
+</ContentPage>
